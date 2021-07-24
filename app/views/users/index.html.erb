@@ -1,7 +1,67 @@
-<div class="container">
+<div class="container px-5">
   <div class="row">
-    <div class="col-lg-3">
-       <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, format: 'jpeg' %>
+    <div class="col-md-3">
+       <h2>User info</h2>
+       <table class="table">
+         <tbody>
+           <tr>
+              <th>name</th>
+              <th><%= @user.name %></th>
+           </tr>
+           <tr>
+             <th>introduction</th>
+             <th><%= @user.introduction %></th>
+           </tr>
+         </tbody>
+      </table>
+
+      <div class="row">
+        <%= link_to "User Edit", edit_user_path(@user.id) %>
+      </div>
+
+      <div class="row">
+        <h2>New Book</h2>
+        <%= form_with model:@book, local:true do |f| %>
+        <div class="form-group">
+         <%= f.label :Title %><br />
+         <%= f.text_field :title %>
+        </div>
+        <div class="form-group">
+         <%= f.label :Opinion %><br />
+         <%= f.text_field :body %>
+        </div>
+        <div class="form-group">
+         <%= f.submit "Create Book" %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-8 offset-1">
+      <h2>Users</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+          <tr>
+            <th>
+             <%= attachment_image_tag user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %>
+            </th>
+            <th>
+              <%= user.name %>
+            </th>
+            <th>
+              <%= link_to "Show", user_path(user.id) %>
+            </th>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
